@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HCM Project</name>
+    </assembly>
+    <members>
+        <member name="M:HCM_Project.Controllers.EmployeesApiController.GetAll">
+            <summary>Get all employees.</summary>
+        </member>
+        <member name="M:HCM_Project.Controllers.EmployeesApiController.GetById(System.Int32)">
+            <summary>Get one by ID.</summary>
+        </member>
+        <member name="M:HCM_Project.Controllers.EmployeesApiController.Create(HCM_Project.Models.Employee)">
+            <summary>Create a new employee.</summary>
+        </member>
+        <member name="M:HCM_Project.Controllers.EmployeesApiController.Update(System.Int32,HCM_Project.Models.Employee)">
+            <summary>Update an existing employee.</summary>
+        </member>
+        <member name="M:HCM_Project.Controllers.EmployeesApiController.Delete(System.Int32)">
+            <summary>Delete an employee.</summary>
+        </member>
+        <member name="T:HCM_Project.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:HCM_Project.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:HCM_Project.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:HCM_Project.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:HCM_Project.Migrations.AddUsers">
+            <inheritdoc />
+        </member>
+        <member name="M:HCM_Project.Migrations.AddUsers.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:HCM_Project.Migrations.AddUsers.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:HCM_Project.Migrations.AddUsers.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:HCM_Project.Migrations.AddRoleToEmployee">
+            <inheritdoc />
+        </member>
+        <member name="M:HCM_Project.Migrations.AddRoleToEmployee.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:HCM_Project.Migrations.AddRoleToEmployee.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:HCM_Project.Migrations.AddRoleToEmployee.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
