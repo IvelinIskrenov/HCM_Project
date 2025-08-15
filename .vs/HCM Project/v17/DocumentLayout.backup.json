@@ -7,6 +7,34 @@
       "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\controllers\\employeescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\views\\employees\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\views\\employees\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\services\\implementations\\employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\services\\implementations\\employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\services\\interfaces\\iemployeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\services\\interfaces\\iemployeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\hcm project.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\hcm project.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\controllers\\employeesapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\controllers\\employeesapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -19,16 +47,8 @@
       "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\hcm project.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\hcm project.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\views\\account\\accessdenied.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -51,20 +71,12 @@
       "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\views\\employees\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\views\\employees\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\views\\employees\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -107,10 +119,6 @@
       "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|c:\\users\\zozo2\\desktop\\hcm project\\hcm project\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{F66841E3-7C0E-4851-B9FF-039752C4ED45}|HCM Project\\HCM Project.csproj|solutionrelative:hcm project\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -133,44 +141,45 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "HCM Project\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Properties\\launchSettings.json",
-              "RelativeToolTip": "HCM Project\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-08-04T14:04:34.304Z",
+              "Title": "EmployeeService.cs",
+              "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Services\\Implementations\\EmployeeService.cs",
+              "RelativeDocumentMoniker": "HCM Project\\Services\\Implementations\\EmployeeService.cs",
+              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Services\\Implementations\\EmployeeService.cs",
+              "RelativeToolTip": "HCM Project\\Services\\Implementations\\EmployeeService.cs",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAgwNIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T08:47:30.349Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IEmployeeService.cs",
+              "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Services\\Interfaces\\IEmployeeService.cs",
+              "RelativeDocumentMoniker": "HCM Project\\Services\\Interfaces\\IEmployeeService.cs",
+              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Services\\Interfaces\\IEmployeeService.cs",
+              "RelativeToolTip": "HCM Project\\Services\\Interfaces\\IEmployeeService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T08:46:29.834Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\appsettings.json",
-              "RelativeDocumentMoniker": "HCM Project\\appsettings.json",
-              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\appsettings.json",
-              "RelativeToolTip": "HCM Project\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-30T04:42:03.397Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Program.cs",
               "RelativeDocumentMoniker": "HCM Project\\Program.cs",
               "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Program.cs",
               "RelativeToolTip": "HCM Project\\Program.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAAGEAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-30T05:00:57.361Z"
+              "WhenOpened": "2025-07-30T05:00:57.361Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "Dockerfile",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Dockerfile",
               "RelativeDocumentMoniker": "HCM Project\\Dockerfile",
@@ -182,7 +191,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 8,
               "Title": "EmployeesApiController.cs",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Controllers\\EmployeesApiController.cs",
               "RelativeDocumentMoniker": "HCM Project\\Controllers\\EmployeesApiController.cs",
@@ -190,17 +199,16 @@
               "RelativeToolTip": "HCM Project\\Controllers\\EmployeesApiController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T13:41:00.566Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-04T13:41:00.566Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "HCM Project.csproj",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\HCM Project.csproj",
               "RelativeDocumentMoniker": "HCM Project\\HCM Project.csproj",
-              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\HCM Project.csproj",
-              "RelativeToolTip": "HCM Project\\HCM Project.csproj",
+              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\HCM Project.csproj*",
+              "RelativeToolTip": "HCM Project\\HCM Project.csproj*",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2025-08-04T13:23:07.268Z",
@@ -214,14 +222,77 @@
               "RelativeDocumentMoniker": "HCM Project\\Controllers\\EmployeesController.cs",
               "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Controllers\\EmployeesController.cs",
               "RelativeToolTip": "HCM Project\\Controllers\\EmployeesController.cs",
-              "ViewState": "AgIAACoBAAAAAAAAAAAwwDwBAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-30T16:03:45.558Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Employees\\Create.cshtml",
+              "RelativeDocumentMoniker": "HCM Project\\Views\\Employees\\Create.cshtml",
+              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Employees\\Create.cshtml",
+              "RelativeToolTip": "HCM Project\\Views\\Employees\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAABkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-30T16:28:19.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\appsettings.json",
+              "RelativeDocumentMoniker": "HCM Project\\appsettings.json",
+              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\appsettings.json",
+              "RelativeToolTip": "HCM Project\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-30T04:42:03.397Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "HCM Project\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "HCM Project\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAkwFUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-30T17:08:03.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "HCM Project\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "HCM Project\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T18:55:49.713Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "HCM Project\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Properties\\launchSettings.json",
+              "RelativeToolTip": "HCM Project\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-04T14:04:34.304Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "EmployeeCreateViewModel.cs",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\ViewModels\\EmployeeCreateViewModel.cs",
               "RelativeDocumentMoniker": "HCM Project\\ViewModels\\EmployeeCreateViewModel.cs",
@@ -233,7 +304,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "LoginViewModel.cs",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\ViewModels\\LoginViewModel.cs",
               "RelativeDocumentMoniker": "HCM Project\\ViewModels\\LoginViewModel.cs",
@@ -245,7 +316,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "ErrorViewModel.cs",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "HCM Project\\Models\\ErrorViewModel.cs",
@@ -257,7 +328,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "Employee.cs",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Models\\Employee.cs",
               "RelativeDocumentMoniker": "HCM Project\\Models\\Employee.cs",
@@ -270,18 +341,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 12,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "HCM Project\\Controllers\\AccountController.cs",
-              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "HCM Project\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAgwBcAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-30T17:08:03.007Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "AccessDenied.cshtml",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Account\\AccessDenied.cshtml",
               "RelativeDocumentMoniker": "HCM Project\\Views\\Account\\AccessDenied.cshtml",
@@ -293,7 +352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Employees\\Delete.cshtml",
               "RelativeDocumentMoniker": "HCM Project\\Views\\Employees\\Delete.cshtml",
@@ -305,19 +364,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Employees\\Create.cshtml",
-              "RelativeDocumentMoniker": "HCM Project\\Views\\Employees\\Create.cshtml",
-              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Employees\\Create.cshtml",
-              "RelativeToolTip": "HCM Project\\Views\\Employees\\Create.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-30T16:28:19.55Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "HCM Project\\Views\\Shared\\_Layout.cshtml",
@@ -329,7 +376,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Employees\\Edit.cshtml",
               "RelativeDocumentMoniker": "HCM Project\\Views\\Employees\\Edit.cshtml",
@@ -341,7 +388,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "HCM Project\\Views\\Home\\Index.cshtml",
@@ -353,7 +400,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "Login.cshtml",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "HCM Project\\Views\\Account\\Login.cshtml",
@@ -365,7 +412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 22,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Models\\User.cs",
               "RelativeDocumentMoniker": "HCM Project\\Models\\User.cs",
@@ -377,7 +424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 23,
               "Title": "RegisterViewModel.cs",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\ViewModels\\RegisterViewModel.cs",
               "RelativeDocumentMoniker": "HCM Project\\ViewModels\\RegisterViewModel.cs",
@@ -389,7 +436,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Employees\\Index.cshtml",
               "RelativeDocumentMoniker": "HCM Project\\Views\\Employees\\Index.cshtml",
@@ -401,7 +448,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Employees\\Details.cshtml",
               "RelativeDocumentMoniker": "HCM Project\\Views\\Employees\\Details.cshtml",
@@ -413,7 +460,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "HcmContext.cs",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Data\\HcmContext.cs",
               "RelativeDocumentMoniker": "HCM Project\\Data\\HcmContext.cs",
@@ -425,19 +472,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "HCM Project\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "HCM Project\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T18:55:49.713Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "HCM Project\\Views\\_ViewImports.cshtml",
@@ -449,7 +484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "HCM Project\\Views\\_ViewStart.cshtml",
@@ -461,7 +496,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 29,
               "Title": "Register.cshtml",
               "DocumentMoniker": "C:\\Users\\zozo2\\Desktop\\HCM Project\\HCM Project\\Views\\Account\\Register.cshtml",
               "RelativeDocumentMoniker": "HCM Project\\Views\\Account\\Register.cshtml",
@@ -473,7 +508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 30,
               "Title": "dbo.Employees.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HCMDb/True/SqlTable/dbo.Employees.sql",
               "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HCMDb/True/SqlTable/dbo.Employees.sql",
@@ -482,7 +517,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 31,
               "Title": "dbo.Users.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HCMDb/True/SqlTable/dbo.Users.sql",
               "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HCMDb/True/SqlTable/dbo.Users.sql",

@@ -55,5 +55,17 @@
         <member name="M:HCM_Project.Migrations.AddRoleToEmployee.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="M:HCM_Project.Services.Interfaces.IEmployeeService.CreateAsync(HCM_Project.ViewModels.EmployeeCreateViewModel,System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Creates Employee and matching User (password is hashed inside).
+            Returns created Employee.
+            </summary>
+        </member>
+        <member name="M:HCM_Project.Services.Interfaces.IEmployeeService.UpdateAsync(HCM_Project.Models.Employee,System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Updates employee and synchronizes Users table role.
+            Returns tuple: updated Employee and updated User (or null if user not found).
+            </summary>
+        </member>
     </members>
 </doc>

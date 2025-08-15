@@ -183,3 +183,4 @@ C:\Users\zozo2\Desktop\HCM Project\HCM Project\bin\Debug\net8.0\Swashbuckle.AspN
 C:\Users\zozo2\Desktop\HCM Project\HCM Project\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\zozo2\Desktop\HCM Project\HCM Project\obj\Debug\net8.0\HCM Project.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\zozo2\Desktop\HCM Project\HCM Project\obj\Debug\net8.0\HCM Project.xml
+C:\Users\zozo2\Desktop\HCM Project\HCM Project\obj\Debug\net8.0\HCM Project.sourcelink.json

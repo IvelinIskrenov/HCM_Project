@@ -1,14 +1,14 @@
-﻿using HCM_Project.Data;
-using HCM_Project.Models;
+﻿using HCM_Project.Models;
+using HCM_Project.Services.Interfaces;
 using HCM_Project.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Linq;
+using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -17,15 +17,12 @@ namespace HCM_Project.Controllers
     [Authorize]  // All actions require authenticated users
     public class EmployeesController : Controller
     {
-        private readonly HcmContext _context;
-        private readonly IPasswordHasher<User> _hasher;
+        private readonly IEmployeeService _employeeService;
         private readonly ILogger<EmployeesController> _logger;
 
-
-        public EmployeesController(HcmContext context, IPasswordHasher<User> hasher, ILogger<EmployeesController> logger)
+        public EmployeesController(IEmployeeService employeeService, ILogger<EmployeesController> logger)
         {
-            _context = context;
-            _hasher = hasher;
+            _employeeService = employeeService;
             _logger = logger;
         }
 
@@ -35,73 +32,19 @@ namespace HCM_Project.Controllers
         {
             try
             {
-                if (User.IsInRole("HRAdmin"))
-                {
-                    // HRAdmin sees everyone
-                    var allEmployees = await _context.Employees.ToListAsync();
-                    return View(allEmployees);
-                }
-                else if (User.IsInRole("Manager"))
-                {
-                    var mgr = await (
-                        from e in _context.Employees
-                        join u in _context.Users on e.Email equals u.Email
-                        where u.Username == User.Identity.Name
-                        select e
-                    ).FirstOrDefaultAsync();
-                    if (mgr == null) return Forbid();
-
-                    var mgrDept = mgr.Department;
-
-                    var deptGroup = await (
-                            from e in _context.Employees
-                            where e.Department == mgr.Department
-                            select e
-                        ).ToListAsync();
-
-                    var managers = (
-                            from e in deptGroup
-                            where e.Role == "Manager"
-                            orderby e.LastName, e.FirstName
-                            select e
-                        ).ToList();
-
-                    var employees = (
-                            from e in deptGroup
-                            where e.Role == "Employee"
-                            orderby e.LastName, e.FirstName
-                            select e
-                        ).ToList();
-
-                    var result = managers.Concat(employees).ToList();
-                    return View(result);
-                }
-                else
-                {
-                    var self = await (
-                        from e in _context.Employees
-                        join u in _context.Users on e.Email equals u.Email
-                        where u.Username == User.Identity.Name
-                        select e
-                    ).FirstOrDefaultAsync();
-
-                    if (self == null) return Forbid();
-                    return View(new[] { self });
-                }
+                var list = await _employeeService.GetIndexAsync(User);
+                return View(list);
             }
-            catch (DbUpdateException dbEx)
+            catch (UnauthorizedAccessException uex)
             {
-                // got a database error here
-                _logger.LogError(dbEx, "DB error in Index");
-                return StatusCode(500, "Oops, DB problem.");
+                _logger.LogWarning(uex, "Unauthorized in Index");
+                return Forbid();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                // something unexpected happened
                 _logger.LogError(ex, "Error in Index");
                 return StatusCode(500, "Something went wrong.");
             }
-            
         }
 
         // GET: Employees/Details/5
@@ -111,26 +54,19 @@ namespace HCM_Project.Controllers
             if (id == null) return NotFound();
             try
             {
-                var employee = await _context.Employees.FindAsync(id);
-                if (employee == null) return NotFound();
-
-                if (User.IsInRole("Employee"))
-                {
-                    var self = await (
-                        from e in _context.Employees
-                        join u in _context.Users on e.Email equals u.Email
-                        where u.Username == User.Identity.Name
-                        select e
-                    ).FirstOrDefaultAsync();
-                    if (self == null || self.Id != employee.Id)
-                        return Forbid();
-                }
-
-                return View(employee);
+                var emp = await _employeeService.GetDetailsAsync(id.Value, User);
+                return View(emp);
             }
-            catch (System.Exception ex)
+            catch (KeyNotFoundException)
             {
-                // error loading details
+                return NotFound();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
                 _logger.LogError(ex, "Error in Details for {Id}", id);
                 return StatusCode(500, "Error loading details.");
             }
@@ -150,73 +86,65 @@ namespace HCM_Project.Controllers
         [Authorize(Roles = "HRAdmin,Manager")]
         public async Task<IActionResult> Create(EmployeeCreateViewModel vm)
         {
-            ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
+            // If current user is Manager, show only Employee role in the UI (when re-rendering)
+            if (User.IsInRole("Manager"))
+            {
+                ViewBag.Roles = new[] { "Employee" };
+            }
+            else
+            {
+                ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
+            }
 
             if (!ModelState.IsValid)
                 return View(vm);
+
+            // Extra server-side UX validation: Managers must create only Employees.
+            if (User.IsInRole("Manager"))
+            {
+                // Guard against null/empty role or manipulated form values
+                if (string.IsNullOrEmpty(vm.Role) || vm.Role != "Employee")
+                {
+                    ModelState.AddModelError("Role", "Managers can only create users with role 'Employee'.");
+                    return View(vm); // ViewBag.Roles already set to ["Employee"]
+                }
+            }
+
             try
             {
-                if (User.IsInRole("Manager"))
-                {
-                    var mgr = await (
-                        from e in _context.Employees
-                        join u in _context.Users on e.Email equals u.Email
-                        where u.Username == User.Identity.Name
-                        select e
-                    ).FirstOrDefaultAsync();
-                    if (mgr == null) return Forbid();
-
-                    if (vm.Role != "Employee" || vm.Department != mgr.Department)
-                    {
-                        ModelState.AddModelError("",
-                            "Manager can only create Employees in their department.");
-                        return View(vm);
-                    }
-                }
-
-                // 1) Create Employee
-                var employee = new Employee
-                {
-                    FirstName = vm.FirstName,
-                    LastName = vm.LastName,
-                    Email = vm.Email,
-                    JobTitle = vm.JobTitle,
-                    Salary = vm.Salary,
-                    Department = vm.Department,
-                    Role = vm.Role
-                };
-                _context.Employees.Add(employee);
-                await _context.SaveChangesAsync();
-
-                // 2) Create matching User
-                var user = new User
-                {
-                    Username = $"{vm.FirstName}_{vm.LastName}",
-                    Email = vm.Email,
-                    Role = vm.Role
-                };
-                user.PasswordHash = _hasher.HashPassword(user, vm.Password);
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-
+                // service will create Employee + User (with hashed password)
+                var created = await _employeeService.CreateAsync(vm, User);
                 return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateException dbEx)
+            catch (UnauthorizedAccessException uex)
             {
-                // got a DB error when saving
-                _logger.LogError(dbEx, "DB error in Create");
-                ModelState.AddModelError("", "Oops, can't save right now.");
+                // The service enforces department-level rules and will throw UnauthorizedAccessException
+                // (e.g. manager tried to create employee in other department). Show the message to user.
+                ModelState.AddModelError("", uex.Message);
+
+                // Ensure the roles list is correct when re-rendering the form after service error
+                if (User.IsInRole("Manager"))
+                    ViewBag.Roles = new[] { "Employee" };
+                else
+                    ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
+
                 return View(vm);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                // unexpected error in create
                 _logger.LogError(ex, "Error in Create");
+
+                // Ensure roles are present when re-rendering
+                if (User.IsInRole("Manager"))
+                    ViewBag.Roles = new[] { "Employee" };
+                else
+                    ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
+
                 ModelState.AddModelError("", "Unexpected error.");
                 return View(vm);
             }
-            
         }
+
 
         // GET: Employees/Edit/5
         [Authorize(Roles = "HRAdmin,Manager")]
@@ -225,15 +153,20 @@ namespace HCM_Project.Controllers
             if (id == null) return NotFound();
             try
             {
-                var emp = await _context.Employees.FindAsync(id);
-                if (emp == null) return NotFound();
-
+                var emp = await _employeeService.GetDetailsAsync(id.Value, User);
                 ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
                 return View(emp);
             }
-            catch (System.Exception ex)
+            catch (KeyNotFoundException)
             {
-                // error loading edit form
+                return NotFound();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
                 _logger.LogError(ex, "Error loading Edit for {Id}", id);
                 return StatusCode(500, "Error loading edit form.");
             }
@@ -251,61 +184,57 @@ namespace HCM_Project.Controllers
             if (!ModelState.IsValid)
                 return View(employee);
 
-            if (User.IsInRole("Manager"))
-            {
-                var mgr = await (
-                    from e in _context.Employees
-                    join u in _context.Users on e.Email equals u.Email
-                    where u.Username == User.Identity.Name
-                    select e
-                ).FirstOrDefaultAsync();
-                if (mgr == null) return Forbid();
-
-                if (employee.Role != "Employee" || employee.Department != mgr.Department)
-                    return Forbid();
-            }
-
             try
             {
-                // 1) Update employee
-                _context.Update(employee);
+                var (updated, updatedUser) = await _employeeService.UpdateAsync(employee, User);
 
-                // 2) Update user's role
-                var user = await (
-                        from u in _context.Users
-                        where u.Email == employee.Email
-                        select u
-                    ).FirstOrDefaultAsync();
-                if (user != null)
+                // If the edited user is the one currently signed in,
+                // refresh their auth cookie so their role claim updates immediately:
+                if (updatedUser != null && updatedUser.Username == User.Identity.Name)
                 {
-                    user.Role = employee.Role;
-                    _context.Users.Update(user);
-                }
-
-                await _context.SaveChangesAsync();
-                //  If the edited user is the one currently signed in,
-                //  refresh their auth cookie so their role claim updates immediately:
-                if (user != null && user.Username == User.Identity.Name)
-                {
-                    // rebuild their claims
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, user.Username),
-                        new Claim(ClaimTypes.Role, user.Role)
+                        new Claim(ClaimTypes.Name, updatedUser.Username),
+                        new Claim(ClaimTypes.Role, updatedUser.Role)
                     };
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);
                     await HttpContext.SignInAsync(principal);
                 }
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Employees.Any(e => e.Id == id))
+                // if concurrency problem: check existence
+                try
+                {
+                    // refetch to see if exists
+                    await _employeeService.GetDetailsAsync(id, User);
+                    // if exists, rethrow to bubble up
+                    throw;
+                }
+                catch (KeyNotFoundException)
+                {
                     return NotFound();
-                throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in Edit for {Id}", id);
+                ModelState.AddModelError("", "Unexpected error.");
+                return View(employee);
             }
 
-            return RedirectToAction(nameof(Index));
+            // unreachable
         }
 
         // GET: Employees/Delete/5
@@ -315,25 +244,19 @@ namespace HCM_Project.Controllers
             if (id == null) return NotFound();
             try
             {
-                var employee = await _context.Employees.FirstOrDefaultAsync(m => m.Id == id);
-                if (employee == null) return NotFound();
-                if (User.IsInRole("Manager"))
-                {
-                    // find this manager's department -> Users join
-                    var mgr = await (
-                        from e in _context.Employees
-                        join u in _context.Users on e.Email equals u.Email
-                        where u.Username == User.Identity.Name
-                        select e
-                    ).FirstOrDefaultAsync();
-                    if (mgr == null || mgr.Department != employee.Department || employee.Role != "Employee")
-                        return Forbid();
-                }
-                return View(employee);
+                var emp = await _employeeService.GetDetailsAsync(id.Value, User);
+                return View(emp);
             }
-            catch (System.Exception ex)
+            catch (KeyNotFoundException)
             {
-                // error loading delete confirmation
+                return NotFound();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
                 _logger.LogError(ex, "Error loading Delete for {Id}", id);
                 return StatusCode(500, "Error loading delete.");
             }
@@ -347,39 +270,25 @@ namespace HCM_Project.Controllers
         {
             try
             {
-                var employee = await _context.Employees.FindAsync(id);
-                if (employee != null)
-                {
-                    if (User.IsInRole("Manager"))
-                    {
-                        var mgr = await (
-                            from e in _context.Employees
-                            join u in _context.Users on e.Email equals u.Email
-                            where u.Username == User.Identity.Name
-                            select e
-                        ).FirstOrDefaultAsync();
-                        if (mgr == null || mgr.Department != employee.Department || employee.Role != "Employee")
-                            return Forbid();
-                    }
-                    _context.Employees.Remove(employee);
-                    await _context.SaveChangesAsync();
-                }
+                await _employeeService.DeleteAsync(id, User);
                 return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateException dbEx)
+            catch (KeyNotFoundException)
             {
-                // db error in delete
-                _logger.LogError(dbEx, "DB error in DeleteConfirmed for {Id}", id);
-                return StatusCode(500, "Can't delete right now.");
+                return NotFound();
             }
-            catch (System.Exception ex)
+            catch (UnauthorizedAccessException)
             {
-                // unexpected error in delete
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
                 _logger.LogError(ex, "Error in DeleteConfirmed for {Id}", id);
-                return StatusCode(500, "Unexpected error.");
+                return StatusCode(500, "Can't delete right now.");
             }
         }
     }
 }
+
 
 

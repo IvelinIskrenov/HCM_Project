@@ -1,4 +1,7 @@
-
+using System.IO;
+using System.Reflection;
+using HCM_Project.Services.Interfaces;
+using HCM_Project.Services.Implementations;
 using HCM_Project.Data;
 using HCM_Project.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -10,29 +13,34 @@ var builder = WebApplication.CreateBuilder(args);
 // Add support for MVC (Controllers + Razor Views)
 builder.Services.AddControllersWithViews();
 
-//Register the Swagger generator and the OpenAPI endpoint
+// Register the Swagger generator and the OpenAPI endpoint
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "HCM API", Version = "v1" });
 
-    //Optional: include XML comments if the file exists
-    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    // Optional: include XML comments if the file exists (for richer Swagger descriptions)
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     if (File.Exists(xmlPath))
         c.IncludeXmlComments(xmlPath);
 });
 
-
-
-//Configure Entity Framework Core to use SQL Server with connection string from configuration
+// Configure Entity Framework Core to use SQL Server with connection string from configuration
 builder.Services.AddDbContext<HcmContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register a password hasher service for the User model
+// This is required by EmployeeService which hashes user passwords when creating users.
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
-//Configure Cookie-based Authentication
+// Service layer registrations
+// Register IEmployeeService so controllers can depend on the service instead of using DbContext directly.
+// This moves business logic out of controllers into a testable service layer.
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
+
+// Configure Cookie-based Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -47,10 +55,10 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-//Enable middleware to serve generated Swagger as JSON
+// Enable middleware to serve generated Swagger as JSON
 app.UseSwagger();
 
-//Enable middleware to serve Swagger?UI (HTML/CSS/JS) at https://<your?host>/swagger
+// Enable middleware to serve Swagger UI (HTML/CSS/JS) at /swagger
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "HCM API V1");
@@ -85,4 +93,7 @@ app.MapControllerRoute(
 app.Run();
 
 
+//git add .
+//git commit -m "Refactor: add service layer (IEmployeeService + EmployeeService) and thin EmployeesController"
+//git push
 
