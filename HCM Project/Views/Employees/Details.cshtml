@@ -34,16 +34,21 @@
 </div>
 
 <p>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to the list</a>
 
-    @if (User.IsInRole("HRAdmin") || User.IsInRole("Manager"))
+    @* Show Edit button:
+       - HRAdmin: always
+       - Manager: only when target is plain Employee (not Manager/HRAdmin)
+       - Employee: no edit button *@
+    @if (User.IsInRole("HRAdmin")
+        || (User.IsInRole("Manager") && string.Equals(Model.Role, "Employee", System.StringComparison.OrdinalIgnoreCase)))
     {
-        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Редакция</a>
     }
+
+    @* Delete button remains visible only to HRAdmin (unchanged) *@
     @if (User.IsInRole("HRAdmin"))
     {
-        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Изтриване</a>
     }
 </p>
-
-

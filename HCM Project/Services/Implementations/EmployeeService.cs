@@ -139,6 +139,10 @@ namespace HCM_Project.Services.Implementations
             var existing = await _context.Employees.FindAsync(updatedEmployee.Id);
             if (existing == null) throw new KeyNotFoundException("Employee not found");
 
+            // Manager restrictions: 
+            //  - cannot edit records that are not Employees (i.e. managers or HRAdmin)
+            //  - cannot edit employees outside their department
+            //  - cannot change role to something other than "Employee"
             if (currentUser.IsInRole("Manager"))
             {
                 var mgr = await (
@@ -150,9 +154,24 @@ namespace HCM_Project.Services.Implementations
 
                 if (mgr == null) throw new UnauthorizedAccessException("Manager record not found");
 
-                if (updatedEmployee.Role != "Employee" || updatedEmployee.Department != mgr.Department)
-                    throw new UnauthorizedAccessException("Manager cannot update this employee");
+                // Cannot edit managers/HRAdmin
+                if (existing.Role != "Employee")
+                    throw new UnauthorizedAccessException("Managers cannot edit other managers or admins.");
+
+                // Cannot edit employees from other departments
+                if (existing.Department != mgr.Department)
+                    throw new UnauthorizedAccessException("Managers can only edit employees in their own department.");
+
+                // Cannot change role to non-Employee
+                if (updatedEmployee.Role != "Employee")
+                    throw new UnauthorizedAccessException("Managers can only assign role 'Employee'.");
+
+                // Cannot move employee to another department
+                if (updatedEmployee.Department != mgr.Department)
+                    throw new UnauthorizedAccessException("Managers can only update employees within their own department.");
             }
+
+            // HRAdmin: allowed to update everything (no checks here)
 
             // update fields
             existing.FirstName = updatedEmployee.FirstName;
@@ -170,7 +189,6 @@ namespace HCM_Project.Services.Implementations
             if (user != null)
             {
                 user.Role = existing.Role;
-                // optionally update Username if name changed:
                 user.Username = $"{existing.FirstName}_{existing.LastName}";
                 _context.Users.Update(user);
             }

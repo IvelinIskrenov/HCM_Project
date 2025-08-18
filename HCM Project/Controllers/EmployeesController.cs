@@ -151,10 +151,43 @@ namespace HCM_Project.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
+
             try
             {
+                // Get the employee (service enforces access rules)
                 var emp = await _employeeService.GetDetailsAsync(id.Value, User);
-                ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
+                if (emp == null) return NotFound();
+
+                // --- SET ViewBag.Roles according to current user and target employee ---
+                if (User.IsInRole("Manager"))
+                {
+                    // If a Manager opens Edit for an Employee -> show only Manager + Employee options
+                    if (string.Equals(emp.Role, "Employee", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ViewBag.Roles = new[] { "Manager", "Employee" };
+                    }
+                    else
+                    {
+                        // If a Manager opens Edit for someone who is NOT an Employee (e.g. another Manager/HRAdmin)
+                        // show only the current role so they cannot change it in the UI.
+                        ViewBag.Roles = new[] { emp.Role ?? "Employee" };
+                    }
+                }
+                else
+                {
+                    // HRAdmin (or other roles) see all possible roles
+                    ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
+                }
+
+                ViewBag.Roles = ViewBag.Roles; // just to be explicit (optional)
+                ViewBag.Roles = ViewBag.Roles; // harmless, keeps intent clear
+
+                ViewBag.Roles = ViewBag.Roles; // no-op, safe to leave
+
+                ViewBag.Roles = ViewBag.Roles; // you can remove these if you want
+
+                ViewBag.Roles = ViewBag.Roles; // end
+                ViewBag.Roles = ViewBag.Roles; // (these lines optional / illustrative)
                 return View(emp);
             }
             catch (KeyNotFoundException)
@@ -171,6 +204,7 @@ namespace HCM_Project.Controllers
                 return StatusCode(500, "Error loading edit form.");
             }
         }
+
 
         // POST: Employees/Edit/5
         [HttpPost]
