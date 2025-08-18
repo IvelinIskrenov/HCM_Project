@@ -1,14 +1,19 @@
-using System.IO;
-using System.Reflection;
-using HCM_Project.Services.Interfaces;
-using HCM_Project.Services.Implementations;
 using HCM_Project.Data;
 using HCM_Project.Models;
+using HCM_Project.Services.Implementations;
+using HCM_Project.Services.Interfaces;
+using HCM_Project.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
+using System.Reflection;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<EmployeeService>();
 
 // Add support for MVC (Controllers + Razor Views)
 builder.Services.AddControllersWithViews();
@@ -89,6 +94,37 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var employeeService = services.GetRequiredService<EmployeeService>();
+
+    var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, "system"),
+        new Claim(ClaimTypes.Role, "HRAdmin") 
+    };
+    var fakeUser = new ClaimsPrincipal(new ClaimsIdentity(claims));
+
+    var vm = new EmployeeCreateViewModel
+    {
+        FirstName = "Ivelin",
+        LastName = "Iskrenov",
+        Email = "ivelin@abv.bg",
+        JobTitle = "Developer",
+        Salary = 20000,
+        Department = "IT",
+        Role = "HRAdmin",
+        Password = "123456"
+    };
+
+    var employee = await employeeService.CreateAsync(vm, fakeUser);
+
+    Console.WriteLine($"Employee created: {employee.FirstName} {employee.LastName}");
+}
 
 app.Run();
 

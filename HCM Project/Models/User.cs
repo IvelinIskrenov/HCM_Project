@@ -1,11 +1,25 @@
-﻿namespace HCM_Project.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HCM_Project.Models
 {
     public class User
     {
+        [Key]
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
-        public string Role { get; set; }  // "HRAdmin", "Manager", "Employee"
+
+        [Required, MaxLength(100)]
+        public string Username { get; set; } = null!; // e.g. First_Last
+
+        [Required, MaxLength(200)]
+        public string Email { get; set; } = null!;
+
+        [Required]
+        public string PasswordHash { get; set; } = null!;
+
+        [Required, MaxLength(50)]
+        public string Role { get; set; } = "Employee";
+
+        // Navigation: 1:1 -> the employee record for this user
+        public Employee? Employee { get; set; }
     }
 }

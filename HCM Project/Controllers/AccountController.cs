@@ -58,14 +58,15 @@ namespace HCM_Project.Controllers
         // and issuing a cookie for the user.
         private async Task SignInUser(User user)
         {
+            // Add NameIdentifier claim (stable numeric id) + Name (username) + Role
             var claims = new List<Claim> {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), // important: numeric id
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Role, user.Role)
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
-
             await HttpContext.SignInAsync(principal);
         }
 

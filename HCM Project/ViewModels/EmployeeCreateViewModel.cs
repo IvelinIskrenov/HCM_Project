@@ -5,6 +5,9 @@ namespace HCM_Project.ViewModels
     public class EmployeeCreateViewModel
     {
         [Required]
+        public int Id { get; set; }
+
+        [Required]
         public string FirstName { get; set; }
 
         [Required]
