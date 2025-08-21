@@ -36,12 +36,15 @@
         <input asp-for="Salary" class="form-control" />
         <span asp-validation-for="Salary" class="text-danger"></span>
     </div>
-
-    <div class="form-group">
-        <label asp-for="Department"></label>
-        <input asp-for="Department" class="form-control" />
-        <span asp-validation-for="Department" class="text-danger"></span>
-    </div>
+    
+    @if (!User.IsInRole("Manager"))
+    {
+        <div class="form-group">
+            <label asp-for="Department"></label>
+            <input asp-for="Department" class="form-control" />
+            <span asp-validation-for="Department" class="text-danger"></span>
+        </div>
+    }
 
     @* Role: if current user is Manager -> force Employee via hidden field + display disabled input. *@
     @if (User.IsInRole("Manager"))
@@ -50,7 +53,7 @@
         <input asp-for="Role" type="hidden" value="Employee" />
         <div class="form-group">
             <label>Role</label>
-            <input class="form-control" value="Employee" disabled />
+            <input class="form-control" value="Employee" disabled="disabled" />@*possible error*@
             <span class="text-muted small">As a Manager you can only create Employees.</span>
             <span asp-validation-for="Role" class="text-danger"></span>
         </div>

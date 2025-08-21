@@ -23,7 +23,7 @@ namespace HCM_Project.ViewModels
         public decimal Salary { get; set; }
 
         [Required]
-        public string Department { get; set; }
+        public string Department { get; set; } = ".";
 
         [Required]
         public string Role { get; set; }

@@ -99,9 +99,10 @@ namespace HCM_Project.Controllers
             if (!ModelState.IsValid)
                 return View(vm);
 
-            // Extra server-side UX validation: Managers must create only Employees.
+            // Managers must create only Employees.
             if (User.IsInRole("Manager"))
             {
+
                 // Guard against null/empty role or manipulated form values
                 if (string.IsNullOrEmpty(vm.Role) || vm.Role != "Employee")
                 {
@@ -165,6 +166,7 @@ namespace HCM_Project.Controllers
                     if (string.Equals(emp.Role, "Employee", StringComparison.OrdinalIgnoreCase))
                     {
                         ViewBag.Roles = new[] { "Manager", "Employee" };
+                        
                     }
                     else
                     {
@@ -179,15 +181,8 @@ namespace HCM_Project.Controllers
                     ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
                 }
 
-                ViewBag.Roles = ViewBag.Roles; // just to be explicit (optional)
-                ViewBag.Roles = ViewBag.Roles; // harmless, keeps intent clear
+                ViewBag.Roles = ViewBag.Roles;
 
-                ViewBag.Roles = ViewBag.Roles; // no-op, safe to leave
-
-                ViewBag.Roles = ViewBag.Roles; // you can remove these if you want
-
-                ViewBag.Roles = ViewBag.Roles; // end
-                ViewBag.Roles = ViewBag.Roles; // (these lines optional / illustrative)
                 return View(emp);
             }
             catch (KeyNotFoundException)
@@ -217,6 +212,7 @@ namespace HCM_Project.Controllers
 
             if (!ModelState.IsValid)
                 return View(employee);
+
 
             try
             {

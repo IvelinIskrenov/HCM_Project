@@ -12,8 +12,8 @@ using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<EmployeeService>();
+//builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+//builder.Services.AddScoped<EmployeeService>();
 
 // Add support for MVC (Controllers + Razor Views)
 builder.Services.AddControllersWithViews();
@@ -96,35 +96,35 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
 
-    var employeeService = services.GetRequiredService<EmployeeService>();
+//    var employeeService = services.GetRequiredService<EmployeeService>();
 
-    var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, "system"),
-        new Claim(ClaimTypes.Role, "HRAdmin") 
-    };
-    var fakeUser = new ClaimsPrincipal(new ClaimsIdentity(claims));
+//    var claims = new List<Claim>
+//    {
+//        new Claim(ClaimTypes.Name, "system"),
+//        new Claim(ClaimTypes.Role, "HRAdmin") 
+//    };
+//    var fakeUser = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
-    var vm = new EmployeeCreateViewModel
-    {
-        FirstName = "Ivelin",
-        LastName = "Iskrenov",
-        Email = "ivelin@abv.bg",
-        JobTitle = "Developer",
-        Salary = 20000,
-        Department = "IT",
-        Role = "HRAdmin",
-        Password = "123456"
-    };
+//    var vm = new EmployeeCreateViewModel
+//    {
+//        FirstName = "Ivelin",
+//        LastName = "Iskrenov",
+//        Email = "ivelin@abv.bg",
+//        JobTitle = "Developer",
+//        Salary = 20000,
+//        Department = "IT",
+//        Role = "HRAdmin",
+//        Password = "123456"
+//    };
 
-    var employee = await employeeService.CreateAsync(vm, fakeUser);
+//    var employee = await employeeService.CreateAsync(vm, fakeUser);
 
-    Console.WriteLine($"Employee created: {employee.FirstName} {employee.LastName}");
-}
+//    Console.WriteLine($"Employee created: {employee.FirstName} {employee.LastName}");
+//}
 
 app.Run();
 

@@ -158,6 +158,8 @@ namespace HCM_Project.Services.Implementations
                 var mgr = await _context.Employees.FirstOrDefaultAsync(e => e.UserId == cu.Id);
                 if (mgr == null) throw new UnauthorizedAccessException("Manager record not found");
 
+                vm.Department = mgr.Department;
+
                 if (!string.Equals(vm.Role, "Employee", StringComparison.OrdinalIgnoreCase) || vm.Department != mgr.Department)
                     throw new UnauthorizedAccessException("Manager can only create employees in their department");
             }
@@ -218,7 +220,7 @@ namespace HCM_Project.Services.Implementations
             var existing = await _context.Employees.FindAsync(updatedEmployee.Id);
             if (existing == null) throw new KeyNotFoundException("Employee not found");
 
-            // Manager restrictions
+            //Manager restrictions
             if (currentUser.IsInRole("Manager"))
             {
                 var currentUserId = GetCurrentUserId(currentUser);
@@ -244,10 +246,6 @@ namespace HCM_Project.Services.Implementations
                 if (existing.Department != mgr.Department)
                     throw new UnauthorizedAccessException("Managers can only edit employees in their own department.");
 
-                // cannot change role to non-Employee
-                if (!string.Equals(updatedEmployee.Role, "Employee", StringComparison.OrdinalIgnoreCase))
-                    throw new UnauthorizedAccessException("Managers can only assign role 'Employee'.");
-
                 // cannot move to another department
                 if (updatedEmployee.Department != mgr.Department)
                     throw new UnauthorizedAccessException("Managers can only update employees within their own department.");
@@ -258,11 +256,15 @@ namespace HCM_Project.Services.Implementations
             existing.LastName = updatedEmployee.LastName;
             existing.Email = updatedEmployee.Email;
             existing.JobTitle = updatedEmployee.JobTitle;
-            existing.Salary = updatedEmployee.Salary;
-            existing.Department = updatedEmployee.Department;
+            existing.Salary = updatedEmployee.Salary;        
             existing.Role = updatedEmployee.Role;
+            if (!currentUser.IsInRole("Manager"))
+            {
+                existing.Department = updatedEmployee.Department;
+            }
 
-            _context.Employees.Update(existing);
+
+                _context.Employees.Update(existing);
 
             // synchronize user if linked by UserId
             User? user = null;

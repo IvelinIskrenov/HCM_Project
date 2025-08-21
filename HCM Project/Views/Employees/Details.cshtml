@@ -43,12 +43,12 @@
     @if (User.IsInRole("HRAdmin")
         || (User.IsInRole("Manager") && string.Equals(Model.Role, "Employee", System.StringComparison.OrdinalIgnoreCase)))
     {
-        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Редакция</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
     }
 
     @* Delete button remains visible only to HRAdmin (unchanged) *@
     @if (User.IsInRole("HRAdmin"))
     {
-        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Изтриване</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
     }
 </p>
