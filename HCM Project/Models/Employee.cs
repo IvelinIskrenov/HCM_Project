@@ -20,11 +20,10 @@ namespace HCM_Project.Models
         public string Department { get; set; } = null!;
         public string Role { get; set; } = "Employee";
 
-        // NEW: foreign key to User (1:1)
-        // Initially nullable to allow safe migration; later you may make it non-nullable
+        //foreign key to User (1:1), initially nullable to allow safe migration
         public int? UserId { get; set; }
 
-        // Navigation property for 1:1 relation
+        //navigation property for 1:1 relation
         public User? User { get; set; }
     }
 }

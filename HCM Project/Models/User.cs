@@ -8,7 +8,7 @@ namespace HCM_Project.Models
         public int Id { get; set; }
 
         [Required, MaxLength(100)]
-        public string Username { get; set; } = null!; // e.g. First_Last
+        public string Username { get; set; } = null!; //First_Last
 
         [Required, MaxLength(200)]
         public string Email { get; set; } = null!;
@@ -19,7 +19,7 @@ namespace HCM_Project.Models
         [Required, MaxLength(50)]
         public string Role { get; set; } = "Employee";
 
-        // Navigation: 1:1 -> the employee record for this user
+        //nav 1:1 -> the employee record for this user
         public Employee? Employee { get; set; }
     }
 }

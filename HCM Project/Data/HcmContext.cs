@@ -17,23 +17,23 @@ namespace HCM_Project.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // precision for Salary
+            //precision for salary
             modelBuilder.Entity<Employee>()
                 .Property(e => e.Salary)
                 .HasPrecision(18, 2);
 
-            // unique index on Username
+            //unique index on Username
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Username)
                 .IsUnique();
 
-            // 1:1 mapping: User <-> Employee via Employee.UserId
-            // A User has one Employee, an Employee has one User, FK is Employee.UserId
+            //1:1 mapping: User <-> Employee with Employee.UserId
+            //A User has one Employee, an Employee has one User, FK is Employee.UserId
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Employee)
                 .WithOne(e => e.User)
                 .HasForeignKey<Employee>(e => e.UserId)
-                .OnDelete(DeleteBehavior.Cascade); // change behavior if you prefer SetNull
+                .OnDelete(DeleteBehavior.Cascade); //change behavior if you prefer SetNull, chain delete ?
         }
     }
 }

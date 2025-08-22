@@ -23,8 +23,7 @@ namespace HCM_Project.Services.Implementations
             _hasher = hasher;
         }
 
-        // helper: try to get current user's numeric id from claims (NameIdentifier)
-        // returns null if cannot find
+        //get current user's numeric id from claims (NameIdentifier)
         private int? GetCurrentUserId(ClaimsPrincipal currentUser)
         {
             var idClaim = currentUser?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -32,7 +31,7 @@ namespace HCM_Project.Services.Implementations
             return null;
         }
 
-        // helper: get username from ClaimsPrincipal; throws if missing
+        //get username from ClaimsPrincipal- throws if missing
         private string GetCurrentUsername(ClaimsPrincipal currentUser)
         {
             var username = currentUser?.Identity?.Name;
@@ -41,20 +40,20 @@ namespace HCM_Project.Services.Implementations
             return username;
         }
 
-        // GET index: HRAdmin -> everyone
-        // Manager -> managers first then employees from same department
-        // Employee -> only self
+        //GET index: HRAdmin -> everyone
+        //           Manager -> managers first then employees from same department
+        //           Employee -> only self
         public async Task<IEnumerable<Employee>> GetIndexAsync(ClaimsPrincipal currentUser)
         {
             if (currentUser.IsInRole("HRAdmin"))
             {
-                // admin sees all
+                //admin sees all
                 return await _context.Employees.AsNoTracking().ToListAsync();
             }
 
             if (currentUser.IsInRole("Manager"))
             {
-                // find current user's user id or username
+                //find current user's user id or username, cu is current user!!
                 var currentUserId = GetCurrentUserId(currentUser);
                 User? cu;
                 if (currentUserId.HasValue)
@@ -67,11 +66,11 @@ namespace HCM_Project.Services.Implementations
 
                 if (cu == null) throw new UnauthorizedAccessException("Current user record not found");
 
-                // find manager employee by UserId
+                //find manager employee by UserId
                 var mgr = await _context.Employees.FirstOrDefaultAsync(e => e.UserId == cu.Id);
                 if (mgr == null) throw new UnauthorizedAccessException("Manager record not found");
 
-                // load everyone in that department
+                //load everyone in that department
                 var deptPeople = await _context.Employees
                     .Where(e => e.Department == mgr.Department)
                     .AsNoTracking()
@@ -86,7 +85,7 @@ namespace HCM_Project.Services.Implementations
                 return managers.Concat(employees).ToList();
             }
 
-            // Employee role -> only self
+            //Employee role -> only self
             {
                 var currentUserId = GetCurrentUserId(currentUser);
                 User? cu;
@@ -108,7 +107,7 @@ namespace HCM_Project.Services.Implementations
             }
         }
 
-        // GET details
+        //GET -> details
         public async Task<Employee> GetDetailsAsync(int id, ClaimsPrincipal currentUser)
         {
             var employee = await _context.Employees.FindAsync(id);
@@ -116,7 +115,7 @@ namespace HCM_Project.Services.Implementations
 
             if (currentUser.IsInRole("Employee"))
             {
-                // only self can view
+                //only self can view
                 var currentUserId = GetCurrentUserId(currentUser);
                 User? cu;
                 if (currentUserId.HasValue)
@@ -137,10 +136,10 @@ namespace HCM_Project.Services.Implementations
             return employee;
         }
 
-        // CREATE: create User first, then Employee with UserId (in a DB transaction)
+        //CREATE -> create User first, then Employee with UserId (in a DB transaction) (chain create) 
         public async Task<Employee> CreateAsync(EmployeeCreateViewModel vm, ClaimsPrincipal currentUser)
         {
-            // Manager rules: only create Employees in own department and role must be Employee
+            //Manager rules :- only create Employees in own department and role must be Employee
             if (currentUser.IsInRole("Manager"))
             {
                 var currentUserId = GetCurrentUserId(currentUser);
@@ -164,17 +163,17 @@ namespace HCM_Project.Services.Implementations
                     throw new UnauthorizedAccessException("Manager can only create employees in their department");
             }
 
-            // prepare username
+            //prepare username
             var proposedUsername = $"{vm.FirstName}_{vm.LastName}";
 
-            // check duplicates
+            //check duplicates
             if (await _context.Users.AnyAsync(u => u.Username == proposedUsername))
                 throw new InvalidOperationException("Username already exists.");
 
             if (await _context.Users.AnyAsync(u => u.Email == vm.Email))
                 throw new InvalidOperationException("Email already registered.");
 
-            // create in transaction
+            //create in transaction
             await using var tx = await _context.Database.BeginTransactionAsync();
             try
             {
@@ -187,7 +186,7 @@ namespace HCM_Project.Services.Implementations
                 user.PasswordHash = _hasher.HashPassword(user, vm.Password);
 
                 _context.Users.Add(user);
-                await _context.SaveChangesAsync(); // user.Id now exists
+                await _context.SaveChangesAsync(); //user.Id now exists
 
                 var employee = new Employee
                 {
@@ -214,7 +213,7 @@ namespace HCM_Project.Services.Implementations
             }
         }
 
-        // UPDATE: update employee and sync user (by UserId)
+        //UPDATE :- update employee and sync user (by UserId) (when we update the info)
         public async Task<(Employee Employee, User? User)> UpdateAsync(Employee updatedEmployee, ClaimsPrincipal currentUser)
         {
             var existing = await _context.Employees.FindAsync(updatedEmployee.Id);
@@ -238,20 +237,20 @@ namespace HCM_Project.Services.Implementations
                 var mgr = await _context.Employees.FirstOrDefaultAsync(e => e.UserId == cu.Id);
                 if (mgr == null) throw new UnauthorizedAccessException("Manager record not found");
 
-                // cannot edit managers/HRAdmin
+                //cannot edit managers/HRAdmin
                 if (!string.Equals(existing.Role, "Employee", StringComparison.OrdinalIgnoreCase))
                     throw new UnauthorizedAccessException("Managers cannot edit other managers or admins.");
 
-                // cannot edit employees from other departments
+                //cannot edit employees from other departments
                 if (existing.Department != mgr.Department)
                     throw new UnauthorizedAccessException("Managers can only edit employees in their own department.");
 
-                // cannot move to another department
+                //cannot move to another department
                 if (updatedEmployee.Department != mgr.Department)
                     throw new UnauthorizedAccessException("Managers can only update employees within their own department.");
             }
 
-            // do the update
+            //updating
             existing.FirstName = updatedEmployee.FirstName;
             existing.LastName = updatedEmployee.LastName;
             existing.Email = updatedEmployee.Email;
@@ -266,14 +265,14 @@ namespace HCM_Project.Services.Implementations
 
                 _context.Employees.Update(existing);
 
-            // synchronize user if linked by UserId
+            //synchronize user if linked by UserId
             User? user = null;
             if (existing.UserId.HasValue)
             {
                 user = await _context.Users.FirstOrDefaultAsync(u => u.Id == existing.UserId.Value);
                 if (user != null)
                 {
-                    // check username uniqueness if name changed
+                    //check username uniqueness if name changed
                     var newUsername = $"{existing.FirstName}_{existing.LastName}";
                     if (!string.Equals(user.Username, newUsername, StringComparison.OrdinalIgnoreCase))
                     {
@@ -292,7 +291,7 @@ namespace HCM_Project.Services.Implementations
             return (existing, user);
         }
 
-        // DELETE: remove employee and associated user (policy: remove matching User if linked)
+        //DELETE :- remove employee and associated user (policy: remove matching User if linked)
         public async Task DeleteAsync(int id, ClaimsPrincipal currentUser)
         {
             var employee = await _context.Employees.FindAsync(id);
@@ -317,7 +316,7 @@ namespace HCM_Project.Services.Implementations
                     throw new UnauthorizedAccessException("Manager cannot delete this employee");
             }
 
-            // delete transactionally
+            //delete transactionally
             await using var tx = await _context.Database.BeginTransactionAsync();
             try
             {

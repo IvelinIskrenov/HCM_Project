@@ -46,10 +46,9 @@
         </div>
     }
 
-    @* Role: if current user is Manager -> force Employee via hidden field + display disabled input. *@
+    @*if user is Manager force Employee with hidden field display disabled input.*@
     @if (User.IsInRole("Manager"))
     {
-        <!-- Hidden field actually submitted -->
         <input asp-for="Role" type="hidden" value="Employee" />
         <div class="form-group">
             <label>Role</label>

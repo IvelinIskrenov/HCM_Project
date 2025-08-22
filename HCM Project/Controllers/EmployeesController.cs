@@ -14,7 +14,11 @@ using System.Threading.Tasks;
 
 namespace HCM_Project.Controllers
 {
-    [Authorize]  // All actions require authenticated users
+    /// <summary>
+    /// Controller for managing employees.
+    /// Accessible only to authenticated users.
+    /// </summary>
+    [Authorize]
     public class EmployeesController : Controller
     {
         private readonly IEmployeeService _employeeService;
@@ -26,128 +30,118 @@ namespace HCM_Project.Controllers
             _logger = logger;
         }
 
-        // GET: Employees
-        [Authorize(Roles = "HRAdmin,Manager,Employee")]
-        public async Task<IActionResult> Index()
+        /// <summary>
+        /// Sets available roles in the ViewBag depending on the current user.
+        /// </summary>
+        private void SetRoles(string currentRole = null)
         {
-            try
-            {
-                var list = await _employeeService.GetIndexAsync(User);
-                return View(list);
-            }
-            catch (UnauthorizedAccessException uex)
-            {
-                _logger.LogWarning(uex, "Unauthorized in Index");
-                return Forbid();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error in Index");
-                return StatusCode(500, "Something went wrong.");
-            }
-        }
-
-        // GET: Employees/Details/5
-        [Authorize(Roles = "HRAdmin,Manager,Employee")]
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null) return NotFound();
-            try
-            {
-                var emp = await _employeeService.GetDetailsAsync(id.Value, User);
-                return View(emp);
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return Forbid();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error in Details for {Id}", id);
-                return StatusCode(500, "Error loading details.");
-            }
-        }
-
-        // GET: Employees/Create
-        [Authorize(Roles = "HRAdmin,Manager")]
-        public IActionResult Create()
-        {
-            ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
-            return View();
-        }
-
-        // POST: Employees/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "HRAdmin,Manager")]
-        public async Task<IActionResult> Create(EmployeeCreateViewModel vm)
-        {
-            // If current user is Manager, show only Employee role in the UI (when re-rendering)
             if (User.IsInRole("Manager"))
             {
-                ViewBag.Roles = new[] { "Employee" };
+                ViewBag.Roles = string.Equals(currentRole, "Employee", StringComparison.OrdinalIgnoreCase)
+                    ? new[] { "Manager", "Employee" }
+                    : new[] { currentRole ?? "Employee" };
             }
             else
             {
                 ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
             }
+        }
 
-            if (!ModelState.IsValid)
-                return View(vm);
-
-            // Managers must create only Employees.
-            if (User.IsInRole("Manager"))
+        /// <summary>
+        /// Displays the employee list. Available to all roles.
+        /// </summary>
+        [Authorize(Roles = "HRAdmin,Manager,Employee")]
+        public async Task<IActionResult> Index()
+        {
+            try
             {
+                return View(await _employeeService.GetIndexAsync(User));
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                _logger.LogWarning(ex, "Unauthorized in Index");
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in Index");
+                return StatusCode(500);
+            }
+        }
 
-                // Guard against null/empty role or manipulated form values
-                if (string.IsNullOrEmpty(vm.Role) || vm.Role != "Employee")
-                {
-                    ModelState.AddModelError("Role", "Managers can only create users with role 'Employee'.");
-                    return View(vm); // ViewBag.Roles already set to ["Employee"]
-                }
+        /// <summary>
+        /// Displays employee details by Id.
+        /// </summary>
+        [Authorize(Roles = "HRAdmin,Manager,Employee")]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null) return NotFound();
+
+            try
+            {
+                return View(await _employeeService.GetDetailsAsync(id.Value, User));
+            }
+            catch (KeyNotFoundException) { return NotFound(); }
+            catch (UnauthorizedAccessException) { return Forbid(); }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in Details for {Id}", id);
+                return StatusCode(500);
+            }
+        }
+
+        /// <summary>
+        /// Returns the create employee form (HRAdmin/Manager only).
+        /// </summary>
+        [Authorize(Roles = "HRAdmin,Manager")]
+        public IActionResult Create()
+        {
+            SetRoles();
+            return View();
+        }
+
+        /// <summary>
+        /// Handles employee creation.
+        /// </summary>
+        [HttpPost, ValidateAntiForgeryToken]
+        [Authorize(Roles = "HRAdmin,Manager")]
+        public async Task<IActionResult> Create(EmployeeCreateViewModel vm)
+        {
+            SetRoles();
+
+            if (!ModelState.IsValid) return View(vm);
+
+            // Managers can only create employees
+            if (User.IsInRole("Manager") && vm.Role != "Employee")
+            {
+                ModelState.AddModelError("Role", "Managers can only create employees.");
+                SetRoles("Employee");
+                return View(vm);
             }
 
             try
             {
-                // service will create Employee + User (with hashed password)
-                var created = await _employeeService.CreateAsync(vm, User);
+                await _employeeService.CreateAsync(vm, User);
                 return RedirectToAction(nameof(Index));
             }
-            catch (UnauthorizedAccessException uex)
+            catch (UnauthorizedAccessException ex)
             {
-                // The service enforces department-level rules and will throw UnauthorizedAccessException
-                // (e.g. manager tried to create employee in other department). Show the message to user.
-                ModelState.AddModelError("", uex.Message);
-
-                // Ensure the roles list is correct when re-rendering the form after service error
-                if (User.IsInRole("Manager"))
-                    ViewBag.Roles = new[] { "Employee" };
-                else
-                    ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
-
+                ModelState.AddModelError("", ex.Message);
+                SetRoles(vm.Role);
                 return View(vm);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error in Create");
-
-                // Ensure roles are present when re-rendering
-                if (User.IsInRole("Manager"))
-                    ViewBag.Roles = new[] { "Employee" };
-                else
-                    ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
-
                 ModelState.AddModelError("", "Unexpected error.");
+                SetRoles(vm.Role);
                 return View(vm);
             }
         }
 
-
-        // GET: Employees/Edit/5
+        /// <summary>
+        /// Returns the edit form for a given employee.
+        /// </summary>
         [Authorize(Roles = "HRAdmin,Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -155,107 +149,60 @@ namespace HCM_Project.Controllers
 
             try
             {
-                // Get the employee (service enforces access rules)
                 var emp = await _employeeService.GetDetailsAsync(id.Value, User);
                 if (emp == null) return NotFound();
 
-                // --- SET ViewBag.Roles according to current user and target employee ---
-                if (User.IsInRole("Manager"))
-                {
-                    // If a Manager opens Edit for an Employee -> show only Manager + Employee options
-                    if (string.Equals(emp.Role, "Employee", StringComparison.OrdinalIgnoreCase))
-                    {
-                        ViewBag.Roles = new[] { "Manager", "Employee" };
-                        
-                    }
-                    else
-                    {
-                        // If a Manager opens Edit for someone who is NOT an Employee (e.g. another Manager/HRAdmin)
-                        // show only the current role so they cannot change it in the UI.
-                        ViewBag.Roles = new[] { emp.Role ?? "Employee" };
-                    }
-                }
-                else
-                {
-                    // HRAdmin (or other roles) see all possible roles
-                    ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
-                }
-
-                ViewBag.Roles = ViewBag.Roles;
-
+                SetRoles(emp.Role);
                 return View(emp);
             }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return Forbid();
-            }
+            catch (KeyNotFoundException) { return NotFound(); }
+            catch (UnauthorizedAccessException) { return Forbid(); }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error loading Edit for {Id}", id);
-                return StatusCode(500, "Error loading edit form.");
+                return StatusCode(500);
             }
         }
 
-
-        // POST: Employees/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        /// <summary>
+        /// Saves changes to an employee.
+        /// </summary>
+        [HttpPost, ValidateAntiForgeryToken]
         [Authorize(Roles = "HRAdmin,Manager")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,JobTitle,Salary,Department,Role")] Employee employee)
+        public async Task<IActionResult> Edit(int id, Employee employee)
         {
             if (id != employee.Id) return NotFound();
-            ViewBag.Roles = new[] { "HRAdmin", "Manager", "Employee" };
-
-            if (!ModelState.IsValid)
-                return View(employee);
-
+            if (!ModelState.IsValid) return View(employee);
 
             try
             {
                 var (updated, updatedUser) = await _employeeService.UpdateAsync(employee, User);
 
-                // If the edited user is the one currently signed in,
-                // refresh their auth cookie so their role claim updates immediately:
-                if (updatedUser != null && updatedUser.Username == User.Identity.Name)
+                // If the current user is updated, refresh their claims
+                if (updatedUser?.Username == User.Identity.Name)
                 {
-                    var claims = new List<Claim>
+                    var claims = new[]
                     {
                         new Claim(ClaimTypes.Name, updatedUser.Username),
                         new Claim(ClaimTypes.Role, updatedUser.Role)
                     };
-                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var principal = new ClaimsPrincipal(identity);
-                    await HttpContext.SignInAsync(principal);
+                    await HttpContext.SignInAsync(
+                        new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme))
+                    );
                 }
 
                 return RedirectToAction(nameof(Index));
             }
-            catch (UnauthorizedAccessException)
-            {
-                return Forbid();
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
+            catch (UnauthorizedAccessException) { return Forbid(); }
+            catch (KeyNotFoundException) { return NotFound(); }
             catch (DbUpdateConcurrencyException)
             {
-                // if concurrency problem: check existence
                 try
                 {
-                    // refetch to see if exists
                     await _employeeService.GetDetailsAsync(id, User);
-                    // if exists, rethrow to bubble up
-                    throw;
+                    throw; // still exists -> rethrow
                 }
-                catch (KeyNotFoundException)
-                {
-                    return NotFound();
-                }
+                catch (KeyNotFoundException) { return NotFound(); }
             }
             catch (Exception ex)
             {
@@ -264,37 +211,34 @@ namespace HCM_Project.Controllers
                 return View(employee);
             }
 
-            // unreachable
+            return View(employee);
         }
 
-        // GET: Employees/Delete/5
+        /// <summary>
+        /// Displays delete confirmation page for an employee.
+        /// </summary>
         [Authorize(Roles = "HRAdmin,Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
+
             try
             {
-                var emp = await _employeeService.GetDetailsAsync(id.Value, User);
-                return View(emp);
+                return View(await _employeeService.GetDetailsAsync(id.Value, User));
             }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return Forbid();
-            }
+            catch (KeyNotFoundException) { return NotFound(); }
+            catch (UnauthorizedAccessException) { return Forbid(); }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error loading Delete for {Id}", id);
-                return StatusCode(500, "Error loading delete.");
+                return StatusCode(500);
             }
         }
 
-        // POST: Employees/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        /// <summary>
+        /// Deletes an employee.
+        /// </summary>
+        [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
         [Authorize(Roles = "HRAdmin,Manager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -303,22 +247,17 @@ namespace HCM_Project.Controllers
                 await _employeeService.DeleteAsync(id, User);
                 return RedirectToAction(nameof(Index));
             }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return Forbid();
-            }
+            catch (KeyNotFoundException) { return NotFound(); }
+            catch (UnauthorizedAccessException) { return Forbid(); }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error in DeleteConfirmed for {Id}", id);
-                return StatusCode(500, "Can't delete right now.");
+                return StatusCode(500);
             }
         }
     }
 }
+
 
 
 

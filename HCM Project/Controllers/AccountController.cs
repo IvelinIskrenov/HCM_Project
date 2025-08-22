@@ -23,44 +23,41 @@ namespace HCM_Project.Controllers
             _hasher = hasher;
         }
 
-        // GET: /Account/Login
-        // Displays the login form.
+        //GET - Account->Login
+        //Displays the login form.
         [HttpGet]
         public IActionResult Login() => View();
 
-        // POST: /Account/Login
-        // Authenticates the user. If credentials are valid, signs them in using cookies.
+        //POST - Account->Login
+        //Authenticates the user. If are valid, signs them in using cookies.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel vm)
         {
             if (!ModelState.IsValid) return View(vm);
 
-            // Try to find user by username
-            //var user = _context.Users.SingleOrDefault(u => u.Username == vm.Username);
+            //Find user by username
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == vm.Username);
 
-            // Validate password
+            //Validate password
             if (user == null ||
-                _hasher.VerifyHashedPassword(user, user.PasswordHash, vm.Password)
-                    != PasswordVerificationResult.Success)
+                _hasher.VerifyHashedPassword(user, user.PasswordHash, vm.Password) != PasswordVerificationResult.Success)
             {
                 ModelState.AddModelError("", "Invalid username or password.");
                 return View(vm);
             }
 
-            // Sign the user in
+            //Sign the user in
             await SignInUser(user);
             return RedirectToAction("Index", "Employees");
         }
 
-        // Handles the actual sign-in logic by creating a ClaimsPrincipal
-        // and issuing a cookie for the user.
+        //Handles the sign-in logic by creating a ClaimsPrincipal and issuing a cookie for the user.
         private async Task SignInUser(User user)
         {
-            // Add NameIdentifier claim (stable numeric id) + Name (username) + Role
+            //NameIdentifier claim (stable numeric id) + Name (username) + Role
             var claims = new List<Claim> {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), // important: numeric id
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Role, user.Role)
             };
@@ -70,16 +67,16 @@ namespace HCM_Project.Controllers
             await HttpContext.SignInAsync(principal);
         }
 
-        // GET: /Account/Logout
-        // Signs the user out and redirects to Login page.
+        //GET - Account->Logout
+        //Signs the user out and redirects to Login page.
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
             return RedirectToAction("Login");
         }
 
-        // GET: /Account/AccessDenied
-        // Shown when a user tries to access a forbidden resource.
+        //GET - Account->AccessDenied
+        //Shown when a user tries to access a forbidden resource.
         public IActionResult AccessDenied() => View();
     }
 }

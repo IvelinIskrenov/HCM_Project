@@ -8,28 +8,25 @@ namespace HCM_Project.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        // Constructor: injects logger service
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
-        // GET: /
-        // Default home page
+        //GET: default home page
         public IActionResult Index()
         {
             return View();
         }
 
-        // GET: /Home/Privacy
-        // Static "Privacy Policy" page
+
+        //GET:- "Privacy Policy" page
         public IActionResult Privacy()
         {
             return View();
         }
 
-        // GET: /Home/Error
-        // Error handling page. Displays error info including RequestId.
+        //GET: - error handling page. 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
